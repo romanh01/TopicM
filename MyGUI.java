@@ -1,6 +1,5 @@
 package Topic_M;
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -9,11 +8,13 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -31,17 +32,23 @@ public class MyGUI extends JFrame implements ActionListener
 	JButton button3;
 	JButton button4;
 	JButton button5;
+	JButton button6;
 
 	JPanel redpanel;
 	JPanel greenpanel;
 	JPanel bluepanel;
 	JPanel yellowpanel;
+	JPanel magentapanel;
 	
 	JTextField topNField;
 	JTextField stopWordField;
 
 	
 	int topN = 10;
+	float[] statsArray;
+	float verdict;
+	float duplicateNum;
+	File csvfile;
 	String file1path = "file1.txt";
 	String file2path = "file2.txt";
 	String stopPath = "stop_words.txt";
@@ -85,6 +92,12 @@ public class MyGUI extends JFrame implements ActionListener
 		button5.setToolTipText("Start comparison and return");
 		button5.addActionListener(this);
 		
+		// IN PANEL 5 - CLICK TO: DISPLAY PREVIOUS RECORD
+		button6 = new JButton();
+		button6.setText("Load Previous Record");
+		button6.setToolTipText("Previous record of top file1 & file2 contents and its stats");
+		button6.addActionListener(this);
+		
 		// TEXTFIELD - topNField - PANEL 2
 		topNField = new JTextField("N");
 		topNField.setPreferredSize(new Dimension(50,50));
@@ -118,6 +131,10 @@ public class MyGUI extends JFrame implements ActionListener
 		yellowpanel.setBackground(Color.YELLOW);
 		yellowpanel.setBounds(150, 310, 500, 75);
 		
+		magentapanel = new JPanel();
+		magentapanel.setBackground(Color.MAGENTA);
+		magentapanel.setBounds(150, 410, 500, 75);
+		
 		/* 1. LEAVE ME HERE */
 		frame = new JFrame("Topic Modeller");
 		frame.setDefaultCloseOperation(MyGUI.EXIT_ON_CLOSE);
@@ -137,6 +154,8 @@ public class MyGUI extends JFrame implements ActionListener
 		
 		yellowpanel.add(button5);
 		
+		magentapanel.add(button6);
+		
 		/* 3. ADDING PANELS TO FRAME */
 		frame.add(redpanel);
 		frame.add(greenpanel);
@@ -144,7 +163,6 @@ public class MyGUI extends JFrame implements ActionListener
 		frame.add(yellowpanel);
 	
 	}
-
 
 
 	public void actionPerformed(ActionEvent e) 
@@ -165,7 +183,17 @@ public class MyGUI extends JFrame implements ActionListener
 			{
 				File file1 = new File(chooseFile1.getSelectedFile().getAbsolutePath());
 				
-				file1path = file1.getAbsolutePath();;
+				file1path = file1.getAbsolutePath();
+			}
+			
+			try 
+			{
+				// PASSING FILE1 TO FiletoList Method in FileProcessor class
+				file1List = FileProcessor.FiletoList(file1path,file1List);
+			} 
+			catch (FileNotFoundException e1) 
+			{
+				e1.printStackTrace();
 			}
 		}
 		
@@ -187,14 +215,45 @@ public class MyGUI extends JFrame implements ActionListener
 				
 				file2path = file1.getAbsolutePath();
 			}
+			
+			try 
+			{
+				// PASSING FILE2 TO FiletoList Method in FileProcessor class
+				file2List = FileProcessor.FiletoList(file2path,file2List);
+			}
+			catch (FileNotFoundException e1)
+			{
+				e1.printStackTrace();
+			}
 		}
 		
 		/* ALTER topN VALUE */
 		else if(e.getSource() == button3)
 		{
 			String topNText = topNField.getText();
-			int convertMe = Integer.parseInt(topNText); // Text to integer
-			topN = convertMe;
+			int convertMe = 0;
+			
+			JOptionPane.showConfirmDialog(null, "size1:" + file1List.size() + "size2" + file2List.size());
+			
+			// ERROR CHECKING - MUST BE OF TYPE INT
+			if(Pattern.matches("\\d+", (CharSequence) topNText))
+			{
+				convertMe = Integer.parseInt(topNText); // Text to integer
+				
+				// ERROR CHECKING - topN MUST BE SMALLER THEN THE ARRAY SIZE
+				if(convertMe < (file1List.size() & file2List.size()))
+				{
+					topN = convertMe;	
+				}
+				else if(convertMe > file1List.size())
+				{
+					JOptionPane.showConfirmDialog(null, "Number must be smaller", "Size Error", JOptionPane.WARNING_MESSAGE);
+				}
+			}
+			else
+			{
+				JOptionPane.showConfirmDialog(null, "Must be a positive number", "Type Error", JOptionPane.WARNING_MESSAGE);
+			}
 		}
 		
 		/* CALL FiletoList METHOD TO CONVERT stopWords text file TO AN ARRAYLIST */
@@ -212,29 +271,13 @@ public class MyGUI extends JFrame implements ActionListener
 			{
 				e1.printStackTrace();
 			}
-			stopList.add(stopWordText);
+			// WORD SENT IN LOWERCASE
+			String lowercaseMe = stopWordText.toLowerCase();
+			stopList.add(lowercaseMe);
 		}
 		else if(e.getSource() == button5)
 		{
-			try 
-			{
-				// PASSING FILE1 TO FiletoList Method in FileProcessor class
-				file1List = FileProcessor.FiletoList(file1path,file1List);
-			} 
-			catch (FileNotFoundException e1) 
-			{
-				e1.printStackTrace();
-			}
-			
-			try 
-			{
-				// PASSING FILE2 TO FiletoList Method in FileProcessor class
-				file2List = FileProcessor.FiletoList(file2path,file2List);
-			}
-			catch (FileNotFoundException e1)
-			{
-				e1.printStackTrace();
-			}
+
 			
 			// REMOVE Stop Words from File1
 			file1List = FileProcessor.RemoveStopWords(file1List,stopList);
@@ -249,10 +292,42 @@ public class MyGUI extends JFrame implements ActionListener
 			file2List = DuplicateProcessor.CountDuplicates(file2List, topN);
 			
 			// TAKES IN 2 ARRAYLISTS AND COMPARES WORDS IN EACH AND CALCULATES % OF SIMILARITY
-			DuplicateProcessor.CompareLists(file1List,file2List);
+			//RETURNS VERDICT & RETAINLIST SIZE IN AN ARRAY
+			statsArray = DuplicateProcessor.CompareLists(file1List,file2List);
 			
+			verdict = statsArray[0];
+			duplicateNum = statsArray[1];
+			
+			
+			// FLOAT ELEMENT FROM FLOAT ARRAY TO INT
+			int duplicateInt = (int)duplicateNum;
+			
+			
+			if(duplicateInt == 1)
+			{
+				JOptionPane.showMessageDialog(null,duplicateInt + " word was in both files, resulting in a file similarity of " + verdict + "%");
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null,duplicateInt + " words were in both files, resulting in a file similarity of " + verdict + "%");
+			}
+			
+			try
+			{
+				csvfile = FileProcessor.SaveRecords(file1List, file2List, verdict, duplicateInt);
+				
+				FileProcessor.ViewRecords(csvfile);
+			} 
+			catch (FileNotFoundException e1)
+			{
+				e1.printStackTrace();
+			}
+
 		}
-		
+		else if(e.getSource() == button6)
+		{
+			FileProcessor.ViewRecords(csvfile);
+		}
 
 	}
 

@@ -55,19 +55,26 @@ public class DuplicateProcessor
 		return fileList;
 	}
 	
+
+	/* CALCULATES ARRAYLIST SIMILARITY % - RETURNS STATS (VERDICT & retainListsize) IN A List */
 	@SuppressWarnings("unchecked")
-	/* CALCULATES ARRAYLIST SIMILARITY %*/
-	public static void CompareLists(ArrayList<String> fileList1, ArrayList<String> fileList2)
-	{
+	public static float[] CompareLists(ArrayList<String> fileList1, ArrayList<String> fileList2)
+	{ 
 		float verdict;
 		ArrayList<String> retainList = new ArrayList<String>();
+		
 		retainList = (ArrayList<String>)fileList1.clone();
 		
 		retainList.retainAll(fileList2);
-		System.out.println("After retainAll: " + retainList);
+		//System.out.println("After retainAll: " + retainList);
 		
-		float retainListsize = retainList.size();
-		verdict = ((retainListsize/10)*100);
+		float retainListSize = retainList.size();
+		verdict = ((retainListSize/10)*100);
 		System.out.println("Similarity:" +verdict +"%");
+		
+		float[] statsArray = {verdict,retainListSize};
+		
+		// inserted into JOptionPane - BUTTON 5
+		return statsArray;
 	}
 }
