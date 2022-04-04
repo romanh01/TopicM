@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -74,13 +75,14 @@ public class FileProcessor
 		return csvFile;
 	}
 	
-	public static void ViewRecords(File csvFile)
+	@SuppressWarnings("resource")
+	/* READ CSV FILE LINE BY LINE & ASSIGN EACH LINE TO A VARIABLE */
+	public static Object ViewRecords(String csvFilePath) throws IOException
 	{
 		BufferedReader br = null;
 		String line = "";
-		try 
-		{
-			br = new BufferedReader(new FileReader(csvFile));
+
+			br = new BufferedReader(new FileReader(csvFilePath));
 			
 			// file1List
 			line = br.readLine();
@@ -92,32 +94,45 @@ public class FileProcessor
 			
 			// Verdict
 			line= br.readLine();
-			String[] row3 = line.split(",");
+			String row3 = line;
 			
-			System.out.println("FIRST LIST:");
-			for(String i : row1)
-			{
-				System.out.printf("%-10s", i);
-			}
+			// DuplicateNum
+			line = br.readLine();
+			String row4 = line;
 			
-			System.out.println(" ");
+			// Adding data into an array of objects - to return 
 			
-			System.out.println("SECOND LIST:");
-			for(String i : row2)
-			{
-				System.out.printf("%-10s", i);
-			}
+			Object[] recordsObj = new Object[]{row1,row2,row3,row4};
 			
-			System.out.println("Verdict");
-			System.out.println(row3);
 			
-		}
-		catch(Exception E)
-		{
-			JOptionPane.showMessageDialog(null,"No previous records saved!");
-		}
-
-		
+			return recordsObj;
+			
+			
+			
+			
+//			System.out.println("FIRST LIST:");
+//			for(String i : row1)
+//			{
+//				System.out.printf("%-10s", i);
+//			}
+//			
+//			System.out.println(" ");
+//			
+//			System.out.println("SECOND LIST:");
+//			for(String i : row2)
+//			{
+//				System.out.printf("%-10s", i);
+//			}
+//			
+//			System.out.println(" ");
+//			
+//			System.out.println("Verdict: ");
+//			System.out.println(row3);
+//			
+//			System.out.println("DuplicateNum: ");
+//			System.out.println(row4);
+			
+			
 	}
 	
 }

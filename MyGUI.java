@@ -7,7 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 import javax.swing.JButton;
@@ -16,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 public class MyGUI extends JFrame implements ActionListener 
@@ -26,6 +29,8 @@ public class MyGUI extends JFrame implements ActionListener
 	JFrame frame;
 	
 	JLabel label1;
+	
+	JTable table1;
 	
 	JButton button1;
 	JButton button2;
@@ -48,6 +53,7 @@ public class MyGUI extends JFrame implements ActionListener
 	float[] statsArray;
 	float verdict;
 	float duplicateNum;
+	ArrayList<Object> recordsObjList = new ArrayList<Object>();
 	File csvfile;
 	String file1path = "file1.txt";
 	String file2path = "file2.txt";
@@ -114,6 +120,10 @@ public class MyGUI extends JFrame implements ActionListener
 		stopWordField.setBackground(Color.BLACK);
 		stopWordField.setCaretColor(Color.WHITE);
 		
+		// JTABLE - Display returned recordsList DATA
+		table1 = new JTable();
+		//table1.setLayout(FlowLayout());
+		
 		/* PANEL SETTINGS */
 		redpanel = new JPanel();
 		redpanel.setBackground(Color.RED);
@@ -161,6 +171,7 @@ public class MyGUI extends JFrame implements ActionListener
 		frame.add(greenpanel);
 		frame.add(bluepanel);
 		frame.add(yellowpanel);
+		frame.add(magentapanel);
 	
 	}
 
@@ -250,6 +261,7 @@ public class MyGUI extends JFrame implements ActionListener
 					JOptionPane.showConfirmDialog(null, "Number must be smaller", "Size Error", JOptionPane.WARNING_MESSAGE);
 				}
 			}
+			// ACCEPTS ONLY POSITIVE INTEGERS
 			else
 			{
 				JOptionPane.showConfirmDialog(null, "Must be a positive number", "Type Error", JOptionPane.WARNING_MESSAGE);
@@ -316,7 +328,6 @@ public class MyGUI extends JFrame implements ActionListener
 			{
 				csvfile = FileProcessor.SaveRecords(file1List, file2List, verdict, duplicateInt);
 				
-				FileProcessor.ViewRecords(csvfile);
 			} 
 			catch (FileNotFoundException e1)
 			{
@@ -326,7 +337,18 @@ public class MyGUI extends JFrame implements ActionListener
 		}
 		else if(e.getSource() == button6)
 		{
-			FileProcessor.ViewRecords(csvfile);
+			String csvFilePath = "progress.csv";
+			try
+			{
+				recordsObjList= (ArrayList<Object>) FileProcessor.ViewRecords(csvFilePath);
+				
+
+				
+			}
+			catch (IOException e1)
+			{
+				e1.printStackTrace();
+			}
 		}
 
 	}
