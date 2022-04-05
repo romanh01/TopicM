@@ -77,7 +77,7 @@ public class FileProcessor
 	
 	@SuppressWarnings("resource")
 	/* READ CSV FILE LINE BY LINE & ASSIGN EACH LINE TO A VARIABLE */
-	public static Object ViewRecords(String csvFilePath) throws IOException
+	public static String [][] ViewRecords(String csvFilePath) throws IOException
 	{
 		BufferedReader br = null;
 		String line = "";
@@ -92,20 +92,20 @@ public class FileProcessor
 			line= br.readLine();
 			String[] row2 = line.split(",");
 			
-			// Verdict
+			// Verdict - IN String Array
 			line= br.readLine();
-			String row3 = line;
+			// ASSIGNING TO AN ARRAY - SO RETURN STATEMENT WOULD CONSISTS OF SAME DATATYPES
+			String[] row3 = line.split(" ");
 			
-			// DuplicateNum
+			// DuplicateNum - IN String Array
 			line = br.readLine();
-			String row4 = line;
+			String[] row4 = line.split(" ");
 			
-			// Adding data into an array of objects - to return 
+			// Adding String Array variables into a MultiDimentional Array - TO RETURN MULTIPLE VARIABLE
+			String [][] recordsMultiArray = {row1,row2,row3,row4};
 			
-			Object[] recordsObj = new Object[]{row1,row2,row3,row4};
 			
-			
-			return recordsObj;
+			return recordsMultiArray;
 			
 			
 			

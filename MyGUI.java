@@ -3,13 +3,13 @@ package Topic_M;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.regex.Pattern;
 
 import javax.swing.JButton;
@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -44,6 +45,7 @@ public class MyGUI extends JFrame implements ActionListener
 	JPanel bluepanel;
 	JPanel yellowpanel;
 	JPanel magentapanel;
+	JPanel cyanpanel;
 	
 	JTextField topNField;
 	JTextField stopWordField;
@@ -51,9 +53,19 @@ public class MyGUI extends JFrame implements ActionListener
 	
 	int topN = 10;
 	float[] statsArray;
+	String [][] recordsMultiArray = {
+			   { " ", " ", " ", " ", " ", " "," "," "," "," " },
+			   { " ", " ", " ", " ", " ", " "," "," "," "," " },
+			   { " ", " ", " ", " ", " ", " " },
+			   { " ", " ", " ", " ", " ", " " },
+
+ 
+			   };
+	
 	float verdict;
 	float duplicateNum;
-	ArrayList<Object> recordsObjList = new ArrayList<Object>();
+
+	String recordsColNames [] = {"File 1","File 2", "Verdict","Duplicate Count"};
 	File csvfile;
 	String file1path = "file1.txt";
 	String file2path = "file2.txt";
@@ -120,36 +132,35 @@ public class MyGUI extends JFrame implements ActionListener
 		stopWordField.setBackground(Color.BLACK);
 		stopWordField.setCaretColor(Color.WHITE);
 		
-		// JTABLE - Display returned recordsList DATA
-		table1 = new JTable();
-		//table1.setLayout(FlowLayout());
+		// JTABLE - Display returned recordsList DATA - cyanPanel
+		table1 = new JTable(recordsMultiArray,recordsColNames);
+		JScrollPane scroll1 = new JScrollPane(table1);
 		
 		/* PANEL SETTINGS */
 		redpanel = new JPanel();
 		redpanel.setBackground(Color.RED);
-		redpanel.setBounds(150, 10, 500, 75);
-		
+	
 		greenpanel = new JPanel();
 		greenpanel.setBackground(Color.GREEN);
-		greenpanel.setBounds(150, 100, 500, 75);
-		
+
 		bluepanel = new JPanel();
 		bluepanel.setBackground(Color.BLUE);
-		bluepanel.setBounds(150, 210, 500, 75);
 		
 		yellowpanel = new JPanel();
 		yellowpanel.setBackground(Color.YELLOW);
-		yellowpanel.setBounds(150, 310, 500, 75);
-		
+	
 		magentapanel = new JPanel();
 		magentapanel.setBackground(Color.MAGENTA);
-		magentapanel.setBounds(150, 410, 500, 75);
+	
+		cyanpanel = new JPanel();
+		cyanpanel.setBackground(Color.CYAN);
+
 		
 		/* 1. LEAVE ME HERE */
 		frame = new JFrame("Topic Modeller");
 		frame.setDefaultCloseOperation(MyGUI.EXIT_ON_CLOSE);
-		frame.setLayout(null);
-		frame.setSize(750,750);
+		frame.setLayout(new GridLayout(6,1,10,10));
+		frame.setSize(750,1080);
 		frame.setVisible(true);
 		
 		/* 2. ADDING SWING COMPONENTS TO PANELS*/
@@ -166,12 +177,15 @@ public class MyGUI extends JFrame implements ActionListener
 		
 		magentapanel.add(button6);
 		
+		cyanpanel.add(scroll1);
+		
 		/* 3. ADDING PANELS TO FRAME */
 		frame.add(redpanel);
 		frame.add(greenpanel);
 		frame.add(bluepanel);
 		frame.add(yellowpanel);
 		frame.add(magentapanel);
+		frame.add(cyanpanel);
 	
 	}
 
@@ -340,15 +354,29 @@ public class MyGUI extends JFrame implements ActionListener
 			String csvFilePath = "progress.csv";
 			try
 			{
-				recordsObjList= (ArrayList<Object>) FileProcessor.ViewRecords(csvFilePath);
+				recordsMultiArray = FileProcessor.ViewRecords(csvFilePath);
 				
-
 				
+//				String [] file1Array = recordsMultiArray[0];
+//				String [] file2Array = recordsMultiArray[1];
+//				
+//				String [] verdict = recordsMultiArray[2];
+//				String [] duplicateNum = recordsMultiArray[3];
 			}
 			catch (IOException e1)
 			{
 				e1.printStackTrace();
 			}
+			
+//			table1 = new JTable(recordsMultiArray,recordsColNames);
+//			JScrollPane scroll1 = new JScrollPane(table1);
+//			
+//			
+//			cyanpanel = new JPanel();
+//			cyanpanel.setBackground(Color.CYAN);
+//			
+//			cyanpanel.add(scroll1);
+//			frame.add(cyanpanel);
 		}
 
 	}
