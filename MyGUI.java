@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 public class MyGUI extends JFrame implements ActionListener 
 {
@@ -54,12 +55,16 @@ public class MyGUI extends JFrame implements ActionListener
 	int topN = 10;
 	float[] statsArray;
 	String [][] recordsMultiArray = {
-			   { " ", " ", " ", " ", " ", " "," "," "," "," " },
-			   { " ", " ", " ", " ", " ", " "," "," "," "," " },
-			   { " ", " ", " ", " ", " ", " " },
-			   { " ", " ", " ", " ", " ", " " },
-
- 
+			   { " ", " ", " ", " "},
+			   { " ", " ", " ", " "},
+			   { " ", " ", " ", " "},
+			   { " ", " ", " ", " "},
+			   { " ", " ", " ", " "},
+			   { " ", " ", " ", " "},
+			   { " ", " ", " ", " "},
+			   { " ", " ", " ", " "},
+			   { " ", " ", " ", " "},
+			   { " ", " ", " ", " "},
 			   };
 	
 	float verdict;
@@ -356,20 +361,58 @@ public class MyGUI extends JFrame implements ActionListener
 			{
 				recordsMultiArray = FileProcessor.ViewRecords(csvFilePath);
 				
+				table1.setModel(new DefaultTableModel(recordsMultiArray, recordsColNames));
 				
+//				System.out.println(" ");
+//				System.out.println("1st array");
 //				String [] file1Array = recordsMultiArray[0];
+//				
+//				for(int i=0; i<file1Array.length; i++)
+//				{
+//				    System.out.print(file1Array[i]);
+//				}
+//				System.out.println(" ");
+//				System.out.println("2nd array");
 //				String [] file2Array = recordsMultiArray[1];
 //				
+//				for(int i=0; i<file2Array.length; i++)
+//				{
+//				    System.out.print(file2Array[i]);
+//				}
+//				System.out.println(" ");
+//				System.out.println("3rd array");
 //				String [] verdict = recordsMultiArray[2];
+//				
+//				for(int i=0; i<verdict.length; i++)
+//				{
+//				    System.out.print(verdict[i]);
+//				}
+//				System.out.println(" ");
+//				System.out.println("4th array");
 //				String [] duplicateNum = recordsMultiArray[3];
+//				
+//				for(int i=0; i<duplicateNum.length; i++)
+//				{
+//				    System.out.print(duplicateNum[i]);
+//				}
 			}
 			catch (IOException e1)
 			{
 				e1.printStackTrace();
 			}
 			
+//			String [][] recordsMultiArray = {
+//					   { "df ","fn", "ffd", " ", " ", " ", " "," "," "," "," " },
+//					   { " ", " ", " ", " ", " ", " "," "," "," "," " },
+//					   { " ", " ", " ", " ", " ", " " },
+//					   { " ", " ", " ", " ", " ", " " },
+//					   };
+//			
 //			table1 = new JTable(recordsMultiArray,recordsColNames);
 //			JScrollPane scroll1 = new JScrollPane(table1);
+//			cyanpanel.add(scroll1);
+//			//repaint();
+//			JOptionPane.showMessageDialog(null,"table");
 //			
 //			
 //			cyanpanel = new JPanel();

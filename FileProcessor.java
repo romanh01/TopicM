@@ -57,10 +57,25 @@ public class FileProcessor
 			BufferedWriter bw = new BufferedWriter(fw);
 			PrintWriter pw = new PrintWriter(bw);
 			
-			pw.println(file1List);
-			pw.println(file2List);
-			pw.println(verdict);
-			pw.println(duplicateNum);
+			for (int i = 0; i < file1List.size(); i++)
+			{
+			    pw.write(file1List.get(i).toString() + "\n");
+			}
+			pw.print(",");
+			for (int i = 0; i < file2List.size(); i++)
+			{
+			    pw.write(file2List.get(i).toString() + "\n");
+			}
+			
+			pw.write(verdict + "\n");
+			
+			pw.println(duplicateNum + "\n");
+
+			
+			//pw.println(file1List);
+			//pw.println(file2List);
+			//pw.println(verdict);
+			//pw.println(duplicateNum);
 			pw.flush();
 			pw.close();
 			
@@ -70,7 +85,6 @@ public class FileProcessor
 		{
 			JOptionPane.showMessageDialog(null,"Records NOT saved !");
 		}
-
 		
 		return csvFile;
 	}
