@@ -54,23 +54,12 @@ public class MyGUI extends JFrame implements ActionListener
 	
 	int topN = 10;
 	float[] statsArray;
-	String [][] recordsMultiArray = {
-			   { " ", " ", " ", " "},
-			   { " ", " ", " ", " "},
-			   { " ", " ", " ", " "},
-			   { " ", " ", " ", " "},
-			   { " ", " ", " ", " "},
-			   { " ", " ", " ", " "},
-			   { " ", " ", " ", " "},
-			   { " ", " ", " ", " "},
-			   { " ", " ", " ", " "},
-			   { " ", " ", " ", " "},
-			   };
+	String recordsColNames [] = {"File 1","File 2", "Verdict","Duplicate Count"};
+	String [][] recordsMultiArray = {{ "","","",""}};
 	
 	float verdict;
 	float duplicateNum;
 
-	String recordsColNames [] = {"File 1","File 2", "Verdict","Duplicate Count"};
 	File csvfile;
 	String file1path = "file1.txt";
 	String file2path = "file2.txt";
@@ -139,6 +128,8 @@ public class MyGUI extends JFrame implements ActionListener
 		
 		// JTABLE - Display returned recordsList DATA - cyanPanel
 		table1 = new JTable(recordsMultiArray,recordsColNames);
+		table1.setPreferredScrollableViewportSize(new Dimension(500,130));
+		table1.setFillsViewportHeight(true);
 		JScrollPane scroll1 = new JScrollPane(table1);
 		
 		/* PANEL SETTINGS */
@@ -310,10 +301,10 @@ public class MyGUI extends JFrame implements ActionListener
 		{
 
 			
-			// REMOVE Stop Words from File1
+			// REMOVE Stop Words & Punctuation from File1
 			file1List = FileProcessor.RemoveStopWords(file1List,stopList);
 			
-			// REMOVE Stop Words from File2
+			// REMOVE Stop Words & Punctuation from File2
 			file2List = FileProcessor.RemoveStopWords(file2List,stopList);
 			
 			// COUNT DUPLICATES IN file1List WITH A LINKEDHASHMAP + SORT IN DESCENDING ORDER + FETCH FIRST N

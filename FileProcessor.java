@@ -38,13 +38,24 @@ public class FileProcessor
 		return fileList;
 	}
 	
-	/* SEPERATE FUNCTION (USER MAY ADD TO LIST) TO: REMOVE STOPWORDS FROM PASSED ON FILE ARRAYLIST */
+	/* SEPERATE FUNCTION (USER MAY ADD TO LIST) TO: REMOVE STOPWORDS & PUNCTUATION FROM PASSED ON FILE ARRAYLIST */
 	public static ArrayList<String> RemoveStopWords(ArrayList<String> fileList, ArrayList<String> stopList)
 	{
+		ArrayList<String> file2List = new ArrayList<String>();
+		
 		fileList.removeAll(stopList);
 		
-		return fileList;
+		for(String s : fileList)
+		{
+			// KEEP ONLY:
+			s = s.replaceAll("[^A-Za-z0-9]", "");
+			file2List.add(s);
+		}
+		
+		return file2List;
 	}
+	
+	
 	
 	/* SAVE TOP N WORDS IN EACH FILE + FILE SIMILARITY VERDICT + NUMBER OF COMMON WORDS AMONG THE 2 FILES - TO A .csv FILE */
 	public static File SaveRecords(ArrayList<String> file1List, ArrayList<String> file2List, float verdict, int duplicateNum) throws FileNotFoundException
@@ -68,7 +79,7 @@ public class FileProcessor
 			    // WILL ONLY INSERT ONCE - AS 1 PAIR OF STATS
 			    if(i==0)
 			    {
-				    pw.write(verdict + ",");
+				    pw.write(verdict +"%" + ",");
 				    pw.println(duplicateNum);
 			    }
 			    else
