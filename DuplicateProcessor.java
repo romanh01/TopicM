@@ -58,7 +58,7 @@ public class DuplicateProcessor
 
 	/* CALCULATES ARRAYLIST SIMILARITY % - RETURNS STATS (VERDICT & retainListsize) IN A List */
 	@SuppressWarnings("unchecked")
-	public static float[] CompareLists(ArrayList<String> fileList1, ArrayList<String> fileList2)
+	public static float[] CompareLists(ArrayList<String> fileList1, ArrayList<String> fileList2,int topN)
 	{ 
 		float verdict;
 		ArrayList<String> retainList = new ArrayList<String>();
@@ -69,7 +69,7 @@ public class DuplicateProcessor
 		//System.out.println("After retainAll: " + retainList);
 		
 		float retainListSize = retainList.size();
-		verdict = ((retainListSize/10)*100);
+		verdict = ((retainListSize/topN)*100);
 		System.out.println("Similarity:" +verdict +"%");
 		
 		float[] statsArray = {verdict,retainListSize};

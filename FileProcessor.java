@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -57,25 +58,25 @@ public class FileProcessor
 			BufferedWriter bw = new BufferedWriter(fw);
 			PrintWriter pw = new PrintWriter(bw);
 			
+			// 1st ROW: f1,f2,verdict,duplicateNum
+			// Then: f1,f2
 			for (int i = 0; i < file1List.size(); i++)
 			{
-			    pw.write(file1List.get(i).toString() + "\n");
+			    pw.write(file1List.get(i).toString() + ",");
+			    pw.write(file2List.get(i).toString() + ",");
+			    
+			    // WILL ONLY INSERT ONCE - AS 1 PAIR OF STATS
+			    if(i==0)
+			    {
+				    pw.write(verdict + ",");
+				    pw.println(duplicateNum);
+			    }
+			    else
+			    {
+			    	 pw.write("\n");
+			    }
 			}
-			pw.print(",");
-			for (int i = 0; i < file2List.size(); i++)
-			{
-			    pw.write(file2List.get(i).toString() + "\n");
-			}
 			
-			pw.write(verdict + "\n");
-			
-			pw.println(duplicateNum + "\n");
-
-			
-			//pw.println(file1List);
-			//pw.println(file2List);
-			//pw.println(verdict);
-			//pw.println(duplicateNum);
 			pw.flush();
 			pw.close();
 			
@@ -89,64 +90,28 @@ public class FileProcessor
 		return csvFile;
 	}
 	
-	@SuppressWarnings("resource")
 	/* READ CSV FILE LINE BY LINE & ASSIGN EACH LINE TO A VARIABLE */
 	public static String [][] ViewRecords(String csvFilePath) throws IOException
 	{
-		BufferedReader br = null;
-		String line = "";
+		String currentLine = "";
+		String [][] multiArray;
+		
+		FileReader fr = new FileReader(csvFilePath);
+		try (BufferedReader br = new BufferedReader(fr)) 
+		{
+			Collection<String[]> lines = new ArrayList<>();
+			
+			// IDEA ABOUT ARGUMENTS IN THE BELOW FOR LOOP WERE TAKEN FROM: - Method NOT directly copied
+			// https://stackoverflow.com/a/33035265/18583576
+			for (currentLine = br.readLine(); currentLine != null; currentLine = br.readLine()) 
+			{
+				lines.add(currentLine.split(","));
+			}
+			
+			multiArray = lines.toArray(new String[lines.size()][]);
+		}
 
-			br = new BufferedReader(new FileReader(csvFilePath));
-			
-			// file1List
-			line = br.readLine();
-			String[] row1 = line.split(",");
-			
-			// file2List
-			line= br.readLine();
-			String[] row2 = line.split(",");
-			
-			// Verdict - IN String Array
-			line= br.readLine();
-			// ASSIGNING TO AN ARRAY - SO RETURN STATEMENT WOULD CONSISTS OF SAME DATATYPES
-			String[] row3 = line.split(" ");
-			
-			// DuplicateNum - IN String Array
-			line = br.readLine();
-			String[] row4 = line.split(" ");
-			
-			// Adding String Array variables into a MultiDimentional Array - TO RETURN MULTIPLE VARIABLE
-			String [][] recordsMultiArray = {row1,row2,row3,row4};
-			
-			
-			return recordsMultiArray;
-			
-			
-			
-			
-//			System.out.println("FIRST LIST:");
-//			for(String i : row1)
-//			{
-//				System.out.printf("%-10s", i);
-//			}
-//			
-//			System.out.println(" ");
-//			
-//			System.out.println("SECOND LIST:");
-//			for(String i : row2)
-//			{
-//				System.out.printf("%-10s", i);
-//			}
-//			
-//			System.out.println(" ");
-//			
-//			System.out.println("Verdict: ");
-//			System.out.println(row3);
-//			
-//			System.out.println("DuplicateNum: ");
-//			System.out.println(row4);
-			
-			
+	    return multiArray;
 	}
 	
 }
