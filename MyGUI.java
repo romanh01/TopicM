@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -36,6 +37,12 @@ public class MyGUI extends JFrame implements ActionListener
 	JLabel label1;
 	
 	ImageIcon logo;
+	ImageIcon file1;
+	ImageIcon file2;
+	ImageIcon submit;
+	ImageIcon add;
+	ImageIcon compare;
+	ImageIcon load;
 	
 	JTable table1;
 	
@@ -46,6 +53,7 @@ public class MyGUI extends JFrame implements ActionListener
 	JButton button5;
 	JButton button6;
 	
+	// Panels named after colours to easily track them
 	JPanel blackpanel;
 	JPanel redpanel;
 	JPanel greenpanel;
@@ -90,20 +98,28 @@ public class MyGUI extends JFrame implements ActionListener
 	{
 		super (title);
 
-		// IN PANEL 1 - FOR JLABEL - label1 - GUI LOGO
-		logo = new ImageIcon("file_text_compare_black.png");
-		logo.setImage(logo.getImage().getScaledInstance(500,250,Image.SCALE_SMOOTH));
+		// IN PANEL 1 - FOR JLABEL - label1 - GUI LOGO - generated from logo.com
+		logo = new ImageIcon("Icons/file_text_compare_black.png");
+		logo.setImage(logo.getImage().getScaledInstance(550,250,Image.SCALE_SMOOTH));
 		label1 = new JLabel(logo);
 		
-		// IN PANEL 2 - FOR BUTTON 1 - file1path
-		button1 = new JButton();
-		button1.setText("Select 1st File");
+		// IN PANEL 2 - FOR BUTTON 1 - file1path - Icon generated with Da Button Factory (www.clickminded.com)
+		file1 = new ImageIcon("Icons/selectFile1.png");
+		button1 = new JButton(file1);
+		button1.setMargin(new Insets(0, 0, 0, 0));
+		button1.setBackground(getForeground());
+		button1.setBorder(null);
+		//button1.setText("Select 1st File");
 		button1.setToolTipText("Choose file path of 1st file");
 		button1.addActionListener(this);
 		
 		// IN PANEL 2 - FOR BUTTON 1 - file2path
-		button2 = new JButton();
-		button2.setText("Select 2nd File");
+		file2 = new ImageIcon("Icons/selectFile2.png");
+		button2 = new JButton(file2);
+		button2.setMargin(new Insets(0, 0, 0, 0));
+		button2.setBackground(getForeground());
+		button2.setBorder(null);
+		//button2.setText("Select 2nd File");
 		button2.setToolTipText("Choose file path of 2nd file");
 		button2.addActionListener(this);
 		
@@ -116,8 +132,12 @@ public class MyGUI extends JFrame implements ActionListener
 		topNField.setCaretColor(Color.white);
 		
 		// IN PANEL 3
-		button3 = new JButton();
-		button3.setText("Submit");
+		submit = new ImageIcon("Icons/submit.png");
+		button3 = new JButton(submit);
+		button3.setMargin(new Insets(0, 0, 0, 0));
+		button3.setBackground(getForeground());
+		button3.setBorder(null);
+		//button3.setText("Submit");
 		button3.setToolTipText("Submit Top N words to compare in both files");
 		button3.addActionListener(this);
 		
@@ -130,21 +150,33 @@ public class MyGUI extends JFrame implements ActionListener
 		stopWordField.setCaretColor(Color.WHITE);
 		
 		// IN PANEL 4
-		button4 = new JButton();
-		button4.setText("Add");
+		add = new ImageIcon("Icons/add.png");
+		button4 = new JButton(add);
+		button4.setMargin(new Insets(0, 0, 0, 0));
+		button4.setBackground(getForeground());
+		button4.setBorder(null);
+		//button4.setText("Add");
 		button4.setToolTipText("Add to a stop word to stop words list");
 		button4.addActionListener(this);
 		
 		// IN PANEL 5 - CLICK FOR: FiletoList, RemoveStopWords, CountDuplicates, CompareLists
-		button5 = new JButton();
-		button5.setText("Compare both files");
+		compare = new ImageIcon("Icons/compareBothFiles.png");
+		button5 = new JButton(compare);
+		button5.setMargin(new Insets(0, 0, 0, 0));
+		button5.setBackground(getForeground());
+		button5.setBorder(null);
+		//button5.setText("Compare both files");
 		button5.setToolTipText("Start comparison and return");
 		button5.addActionListener(this);
 		
 		// IN PANEL 6 - CLICK TO: DISPLAY PREVIOUS RECORD
-		button6 = new JButton();
-		button6.setText("Load Previous Record");
-		button6.setToolTipText("Previous record of top file1 & file2 contents and its stats");
+		load = new ImageIcon("Icons/loadCurrentPreviousRecord.png");
+		button6 = new JButton(load);
+		button6.setMargin(new Insets(0, 0, 0, 0));
+		button6.setBackground(getForeground());
+		button6.setBorder(null);
+		//button6.setText("Load Current / Previous Record");
+		button6.setToolTipText("Current / Previous record of top file1 & file2 contents and its stats");
 		button6.addActionListener(this);
 				
 		// IN PANEL 7 JTABLE - Display returned recordsList DATA - cyanPanel
@@ -163,10 +195,10 @@ public class MyGUI extends JFrame implements ActionListener
 	    gbc1.weighty = 0.2f;
 	    gbc1.gridx = 0;
 	    gbc1.gridy = 0;
-	    gbc1.gridwidth = 2; 
+	    gbc1.gridwidth = 2;
 	    
 		redpanel = new JPanel();
-		redpanel.setBackground(Color.RED);
+		redpanel.setBackground(Color.DARK_GRAY);
 	    gbc2.fill = GridBagConstraints.BOTH;
 	    gbc2.weightx = 0.7f;
 	    gbc2.weighty = 0.8f;
@@ -174,7 +206,7 @@ public class MyGUI extends JFrame implements ActionListener
 	    gbc2.gridy = 1;
 	
 		greenpanel = new JPanel();
-		greenpanel.setBackground(Color.GREEN);
+		greenpanel.setBackground(Color.DARK_GRAY);
 	    gbc3.fill = GridBagConstraints.BOTH;
 	    gbc3.weightx = 0.7f;
 	    gbc3.weighty = 0.8f;
@@ -182,7 +214,7 @@ public class MyGUI extends JFrame implements ActionListener
 	    gbc3.gridy = 3;	    
 
 		bluepanel = new JPanel();
-		bluepanel.setBackground(Color.BLUE);
+		bluepanel.setBackground(Color.DARK_GRAY);
 	    gbc4.fill = GridBagConstraints.BOTH;
 	    gbc4.weightx = 0.7f;
 	    gbc4.weighty = 0.8f;
@@ -190,7 +222,7 @@ public class MyGUI extends JFrame implements ActionListener
 	    gbc4.gridy = 4;
 		
 		yellowpanel = new JPanel();
-		yellowpanel.setBackground(Color.YELLOW);
+		yellowpanel.setBackground(Color.DARK_GRAY);
 	    gbc5.fill = GridBagConstraints.BOTH;
 	    gbc5.weightx = 0.7f;
 	    gbc5.weighty = 0.8f;
@@ -198,7 +230,7 @@ public class MyGUI extends JFrame implements ActionListener
 	    gbc5.gridy = 5;
 	
 		magentapanel = new JPanel();
-		magentapanel.setBackground(Color.MAGENTA);
+		magentapanel.setBackground(Color.DARK_GRAY);
 	    gbc6.fill = GridBagConstraints.BOTH;
 	    gbc6.weightx = 0.7f;
 	    gbc6.weighty = 0.8f;
@@ -206,7 +238,7 @@ public class MyGUI extends JFrame implements ActionListener
 	    gbc6.gridy = 6;
 	
 		cyanpanel = new JPanel();
-		cyanpanel.setBackground(Color.CYAN);
+		cyanpanel.setBackground(Color.DARK_GRAY);
 	    gbc7.fill = GridBagConstraints.BOTH;
 	    gbc7.weightx = 0.3f;
 	    gbc7.weighty = 1f;
@@ -262,7 +294,7 @@ public class MyGUI extends JFrame implements ActionListener
 			JFileChooser chooseFile1 = new JFileChooser();
 			
 			// SETTING CURRENT DIRECTORY : PROJECT FOLDER
-			chooseFile1.setCurrentDirectory(new File("."));
+			chooseFile1.setCurrentDirectory(new File("./TextFiles/"));
 			
 			// SELECT FILE TO OPEN
 			int response = chooseFile1.showOpenDialog(null);
@@ -292,7 +324,7 @@ public class MyGUI extends JFrame implements ActionListener
 			JFileChooser chooseFile2 = new JFileChooser();
 			
 			// SETTING CURRENT DIRECTORY : PROJECT FOLDER
-			chooseFile2.setCurrentDirectory(new File("."));
+			chooseFile2.setCurrentDirectory(new File("./TextFiles/"));
 			
 			// SELECT FILE TO OPEN
 			int response = chooseFile2.showOpenDialog(null);
@@ -402,6 +434,32 @@ public class MyGUI extends JFrame implements ActionListener
 				JOptionPane.showMessageDialog(null,duplicateInt + " words were in both files, resulting in a file similarity of " + verdict + "%");
 			}
 			
+			/* Displaying Verdict Assumption */
+			if(verdict == 100)
+			{
+				JOptionPane.showMessageDialog(null,"VERDICT: This is the same text");
+			}
+			else if(verdict > 80)
+			{
+				JOptionPane.showMessageDialog(null,"VERDICT: The 2 files are related & have similar content");	
+			}
+			else if(verdict > 50)
+			{
+				JOptionPane.showMessageDialog(null,"VERDICT: The 2 files have some similarities and are likely to be based off same text");	
+			}
+			else if(verdict > 25)
+			{
+				JOptionPane.showMessageDialog(null,"VERDICT: 2 texts show a small corelation, but are still likely to be based off same text");	
+			}
+			else if(verdict < 20)
+			{
+				JOptionPane.showMessageDialog(null,"VERDICT: These texts have very little similarities & so it could be said that they are almost unrelated");	
+			}
+			else if(verdict == 0)
+			{
+				JOptionPane.showMessageDialog(null,"VERDICT: Very different to each other and unrelated");
+			}
+			
 			try
 			{
 				csvfile = FileProcessor.SaveRecords(file1List, file2List, verdict, duplicateInt);
@@ -419,7 +477,7 @@ public class MyGUI extends JFrame implements ActionListener
 			try
 			{
 				recordsMultiArray = FileProcessor.ViewRecords(csvFilePath);
-				
+								
 				table1.setModel(new DefaultTableModel(recordsMultiArray, recordsColNames));
 				
 			}
