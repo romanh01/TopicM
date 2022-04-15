@@ -47,7 +47,7 @@ public class FileProcessor
 		
 		for(String s : fileList)
 		{
-			// KEEP ONLY:
+			// KEEP ONLY (REMOVE PUNCTUATION):
 			s = s.replaceAll("[^A-Za-z0-9]", "");
 			file2List.add(s);
 		}
@@ -119,6 +119,7 @@ public class FileProcessor
 				lines.add(currentLine.split(","));
 			}
 			
+			// ADDING ARRAYLIST TO MULTI-ARRAY - TO USE IN JTABLE - FOR ROWS
 			multiArray = lines.toArray(new String[lines.size()][]);
 		}
 

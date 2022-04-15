@@ -85,6 +85,8 @@ public class MyGUI extends JFrame implements ActionListener
 	float duplicateNum;
 
 	File csvfile;
+	
+	// DEFAULT VALUES ASSIGNED TO VARIABLES
 	String file1path = "file1.txt";
 	String file2path = "file2.txt";
 	String stopPath = "stop_words.txt";
@@ -187,7 +189,7 @@ public class MyGUI extends JFrame implements ActionListener
 		
 		
 		
-		/* PANEL SETTINGS */
+		/* PANEL SETTINGS - GRIDBAG CONSTRAINTS INCLUDED */
         blackpanel = new JPanel();
         blackpanel.setBackground(Color.BLACK);
 	    gbc1.fill = GridBagConstraints.BOTH;
@@ -354,7 +356,7 @@ public class MyGUI extends JFrame implements ActionListener
 			String topNText = topNField.getText();
 			int convertMe = 0;
 			
-			JOptionPane.showConfirmDialog(null, "size1:" + file1List.size() + "size2" + file2List.size());
+			//JOptionPane.showConfirmDialog(null, "size1:" + file1List.size() + "size2" + file2List.size());
 			
 			// ERROR CHECKING - MUST BE OF TYPE INT
 			if(Pattern.matches("\\d+", (CharSequence) topNText))
@@ -393,7 +395,7 @@ public class MyGUI extends JFrame implements ActionListener
 			{
 				e1.printStackTrace();
 			}
-			// WORD SENT IN LOWERCASE
+			// WORD SENT IN LOWERCASE - THAT IS ADDED TO STOPWORDLIST
 			String lowercaseMe = stopWordText.toLowerCase();
 			stopList.add(lowercaseMe);
 		}
@@ -451,7 +453,7 @@ public class MyGUI extends JFrame implements ActionListener
 			{
 				JOptionPane.showMessageDialog(null,"VERDICT: 2 texts show a small corelation, but are still likely to be based off same text");	
 			}
-			else if(verdict < 20)
+			else if(verdict > 20)
 			{
 				JOptionPane.showMessageDialog(null,"VERDICT: These texts have very little similarities & so it could be said that they are almost unrelated");	
 			}
@@ -471,6 +473,7 @@ public class MyGUI extends JFrame implements ActionListener
 			}
 
 		}
+		/* READS .csv FILE - WHERE DATA IS STORED - READS ROW BY ROW INTO A MULTIARRAY AND RETURNS BACK TO POPULATE JTABLE */
 		else if(e.getSource() == button6)
 		{
 			String csvFilePath = "progress.csv";

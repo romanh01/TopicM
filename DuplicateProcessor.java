@@ -25,10 +25,10 @@ public class DuplicateProcessor
 		  System.out.println(DuplicateMap);
 		  System.out.println("-----");
 		  
-		  //LinkedHashMap preserve the ordering of elements in which they are inserted
+		  // LinkedHashMap preserve the ordering of elements in which they are inserted
 		  LinkedHashMap<String, Integer> SortedDuplicateMap = new LinkedHashMap<>();
 		   
-		  //Use Comparator.reverseOrder() for reverse ordering
+		  // Use Comparator.reverseOrder() for reverse ordering
 		  DuplicateMap.entrySet()
 		    .stream()
 		    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) 
@@ -77,4 +77,5 @@ public class DuplicateProcessor
 		// inserted into JOptionPane - BUTTON 5
 		return statsArray;
 	}
+	
 }
