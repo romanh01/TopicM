@@ -3,6 +3,8 @@
  by Roman Holub Ploshko
  C20390201
  
+ ![](topic_modeller_gui.png)
+ 
  ----------------------------------------------------------
  
  Programs Goal:
