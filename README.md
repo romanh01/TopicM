@@ -7,7 +7,7 @@
  
  ----------------------------------------------------------
  
- Programs Goal:
+ ## Programs Goal:
  
  Accept 2 text files from User,
  
@@ -25,7 +25,7 @@
  ----------------------------------------------------------
 
  
-General order of operations:
+## General order of operations:
 
 - (BUTTON 1) - Select File 1 w/ FileChooser & get File Path
 Send File Path to FiletoList method in FileProcessor, File 1 is read into an arrayList, all elements in Arraylist are lowercased and returned back to GUI.
@@ -55,3 +55,33 @@ Calling SaveRecords method in FileProcessor, this method takes in both File Arra
 These are inserted and are written into the csv file - row by row, each row has an element from both the passed on File ArrayLists and the verdict and duplicateInt value are only included once - in the first row. Error Checking is in place to assure the user that the record was successfully saved into the csv file. A common reason why the record could not be saved is if the user has the file open. As data is written to the csv file, previous data is replaced by new data - specified in a parameter.
 
 - (BUTTON 6) - Used to load previous OR Current records, this button can also be used at the start of the program to demonstrate File Persistence - by loading the previous record. The data (that was previously written to the csv file) is read row by row into each string array, these string arrays are inserted into a multi-dimensional array - that is returning to GUI's multi-dimensional array. The 2D array in GUI is used to update the JTABLE and the user after the press sees the populated JTable.
+
+ ----------------------------------------------------------
+ 
+ ## Program Classes:
+ 
+ Control :
+ This class controls the flow of the data and holds the main class. The Swing GUI is called and passed with a title.
+ 
+ FileProcessor :
+ As the class name suggests, this class has methods that directly deal with processing files and their data
+ - converting File to an ArrayList
+ - Remove stopwords and punctuation from the converted ArrayLists
+ - Save statistical data (top words from each file, file similarity %, total amount of common words found in both of those files) to a persistent CSV file (row by row)
+ - Read data (above) saved in the CSV file - to populate (update) a JTable, found in the Swing GUI
+
+ DuplicateProcessor :
+ This class primarily deals with counting and sorting duplicates / common words found within the files, this is achieved with linked hash maps 
+ (with time complexity 0(1)). The algorithm for calculating the file similarity percentage is also present within this class.
+ 
+ MyGUI :
+ All of Java Swing components are in this class, GridBagLayout is used as the layout manager for panels. A total of 6 buttons are displayed in the GUI 
+ (mentioned in above - General order of operations), each with an assigned functionality. The buttons have a custom look as I have designed icons for each button,
+ the logo was also designed, and so is included within the GUI - so that that the interface has a more user-friendly feel. Error-checking is in place.
+ 
+ ----------------------------------------------------------
+ 
+ ## Links
+ 
+ [Outlook](mailto:C20390201@mytudublin.ie)
+ [Github](https://github.com/romanh01/)
