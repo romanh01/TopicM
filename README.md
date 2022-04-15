@@ -4,6 +4,7 @@
  C20390201
  
  ----------------------------------------------------------
+ 
  Programs Goal:
  
  Accept 2 text files from User,
@@ -22,6 +23,7 @@
  ----------------------------------------------------------
  
  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 
 General order of operations:
 
 - (BUTTON 1) - Select File 1 w/ FileChooser & get File Path
